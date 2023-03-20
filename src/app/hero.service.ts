@@ -8,14 +8,24 @@ import { MessageService } from './message.service';
   providedIn: 'root',
 })
 export class HeroService {
+  //example of service in service scenario
+  //injects a service into a service
   constructor(private messageService: MessageService) {}
 
   getHeroes(): Observable<Hero[]> {
     const heroes = of(HEROES);
-
+    this.messageService.add('Hero Service: Fetched heroes');
     return heroes;
 
     //replace the current get method with the http for async
     // return HEROES;
+  }
+
+  getHero(id: number): Observable<Hero> {
+    // For now, assume that a hero with the specified `id` always exists.
+    // Error handling will be added in the next step of the tutorial.
+    const hero = HEROES.find((h) => h.id === id)!;
+    this.messageService.add(`HeroService: fetched hero id=${id}`);
+    return of(hero);
   }
 }
